@@ -1,0 +1,19 @@
+{
+  "name": "match-3-with-pixi",
+  "version": "1.0.0",
+  "description": "Match 3 game with PixiJS",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/RadoslavPavlinchov/match3demoproject.git"
+  },
+  "author": "Radoslav Pavlinchov",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/RadoslavPavlinchov/match3demoproject/issues"
+  },
+  "homepage": "https://github.com/RadoslavPavlinchov/match3demoproject#readme"
+}
