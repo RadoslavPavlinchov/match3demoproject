@@ -4,7 +4,7 @@
   "description": "Match 3 game with PixiJS",
   "main": "index.js",
   "scripts": {
-    "start": "webpack --config webpack.config.js"
+    "start": "webpack-dev-server --config webpack.config.js"
   },
   "repository": {
     "type": "git",
