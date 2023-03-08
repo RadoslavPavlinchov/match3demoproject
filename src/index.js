@@ -1,3 +1,4 @@
 import { App } from "./js/App";
+import { Config } from "./js/Config";
 
-App.run()
+App.run(Config)

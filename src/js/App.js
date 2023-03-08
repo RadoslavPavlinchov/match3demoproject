@@ -6,6 +6,13 @@ class Application {
         this.app = new PIXI.Application({ resizeTo: window });
 
         document.body.appendChild(this.app.view);
+
+        this.start();
+    }
+
+    start() {
+        this.scene = new this.config["startScene"]();
+        this.app.stage.addChild(this.scene.container);
     }
 }
 
