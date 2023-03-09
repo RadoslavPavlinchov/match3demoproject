@@ -17,3 +17,4 @@ class Application {
 }
 
 export const App = new Application();
+globalThis.__PIXI_APP__ = App;
