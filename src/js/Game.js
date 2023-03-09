@@ -1,10 +1,14 @@
 import * as PIXI from "pixi.js";
+import { Field } from "./Field";
 
 export class Game {
     constructor() {
         this.container = new PIXI.Container();
 
         this.createBackground();
+
+        const field = new Field(1, 1);
+        this.container.addChild(field.container)
     }
 
     createBackground() {
