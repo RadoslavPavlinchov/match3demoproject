@@ -1,5 +1,9 @@
 import { Game } from "./Game";
 
 export const Config = {
-    startScene: Game
+    board: {
+        rows: 6,
+        cols: 6
+    },
+    startScene: Game,
 }
