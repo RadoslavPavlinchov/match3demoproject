@@ -1,4 +1,5 @@
 import * as PIXI from "pixi.js";
+import { Item } from "./Item";
 
 export class Field {
     constructor(row, col) {
@@ -8,12 +9,13 @@ export class Field {
         this.width = 100;
         this.height = 100;
 
-
-        const graphics = this.createGraphics();
-
-
         this.container = new PIXI.Container();
-        this.container.addChild(graphics);
+
+        this.createGraphics();
+
+
+
+        this.createItem();
     }
 
     get position() {
@@ -30,7 +32,12 @@ export class Field {
         graphics.drawRect(this.position.x, this.position.y, this.width, this.height);
         graphics.endFill();
 
-        return graphics;
+        this.container.addChild(graphics);
+    }
+
+    createItem() {
+        const item = new Item("0x00ff00", this.position.x, this.position.y);
+        this.container.addChild(item.container);
     }
 
 }
