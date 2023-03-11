@@ -1,5 +1,7 @@
 import * as PIXI from "pixi.js";
+import { App } from "./App";
 import { Item } from "./Item";
+import { Utils } from "./Utils";
 
 export class Field {
     constructor(row, col) {
@@ -36,7 +38,8 @@ export class Field {
     }
 
     createItem() {
-        const item = new Item("0x00ff00", this.position.x, this.position.y);
+        const randomColor = App.config.itemsColors[Utils.getRandomInt(0, App.config.itemsColors.length - 1)];
+        const item = new Item(randomColor, this.position.x, this.position.y);
         this.container.addChild(item.container);
     }
 
