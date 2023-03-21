@@ -10,6 +10,8 @@ export class Grid {
         this.cols = App.config.board.cols;
 
         this.create();
+
+        this.container.on("item-touch-start", this.onItemClick, this);
     }
 
     create() {
@@ -28,5 +30,9 @@ export class Grid {
         const field = new Field(row, col);
         this.fields.push(field);
         this.container.addChild(field.container);
+    }
+
+    onItemClick() {
+        console.log("THIS THING TOUCHED")
     }
 }

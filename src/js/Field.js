@@ -40,6 +40,14 @@ export class Field {
     createItem() {
         const randomColor = App.config.itemsColors[Utils.getRandomInt(0, App.config.itemsColors.length - 1)];
         const item = new Item(randomColor, this.position.x, this.position.y);
+
+        // console.log("item -->", item)
+        item.container.interactive = true;
+        item.container.on("pointerdown", () => {
+            console.log("wtf", this)
+            item.container.emit("item-touch-start", this.container)
+        })
+
         this.container.addChild(item.container);
     }
 
