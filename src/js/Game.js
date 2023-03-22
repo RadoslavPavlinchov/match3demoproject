@@ -9,7 +9,9 @@ export class Game {
 
         // this.createBackground();
 
-        this.createGrid();
+        this.grid = this.createGrid();
+
+        this.grid.container.on("itemClick", this.onItemClick, this);
     }
 
     createBackground() {
@@ -24,7 +26,11 @@ export class Game {
 
     createGrid() {
         const grid = new Grid();
+        this.container.addChild(grid.container);
+        return grid;
+    }
 
-        this.container.addChild(grid.container)
+    onItemClick(item) {
+        console.log("show item", item)
     }
 }

@@ -1,7 +1,4 @@
 import * as PIXI from "pixi.js";
-import { App } from "./App";
-import { Item } from "./Item";
-import { Utils } from "./Utils";
 
 export class Field {
     constructor(row, col) {
@@ -14,10 +11,6 @@ export class Field {
         this.container = new PIXI.Container();
 
         this.createGraphics();
-
-
-
-        this.createItem();
     }
 
     get position() {
@@ -36,19 +29,4 @@ export class Field {
 
         this.container.addChild(graphics);
     }
-
-    createItem() {
-        const randomColor = App.config.itemsColors[Utils.getRandomInt(0, App.config.itemsColors.length - 1)];
-        const item = new Item(randomColor, this.position.x, this.position.y);
-
-        // console.log("item -->", item)
-        item.container.interactive = true;
-        item.container.on("pointerdown", () => {
-            console.log("wtf", this)
-            item.container.emit("item-touch-start", this.container)
-        })
-
-        this.container.addChild(item.container);
-    }
-
 }
