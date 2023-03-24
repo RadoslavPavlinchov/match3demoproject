@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/RadoslavPavlinchov/match3demoproject#readme",
   "dependencies": {
+    "gsap": "^3.11.5",
     "pixi.js": "^7.1.4"
   },
   "devDependencies": {

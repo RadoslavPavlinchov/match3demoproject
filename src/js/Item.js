@@ -1,4 +1,5 @@
 import * as PIXI from "pixi.js"
+import { gsap } from "gsap";
 
 export class Item {
     constructor(color = "#000", x = 0, y = 0) {
@@ -15,6 +16,20 @@ export class Item {
         this.container.cursor = "pointer";
 
         this.container.addChild(graphics);
+
+
+        this.container.on("pointerdown", () => {
+            console.log("action 2")
+            this.container.scale.set(1.1)
+
+            gsap.to(this.container, {
+                // x: "+=10",
+                duration: 0.3,
+                onComplete: () => {
+                    console.log("this thing done")
+                }
+            })
+        })
     }
 
     createGraphics(color) {
