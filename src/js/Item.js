@@ -1,9 +1,14 @@
 import * as PIXI from "pixi.js"
 import { gsap } from "gsap";
+import { PixiPlugin } from "gsap/PixiPlugin";
+
+gsap.registerPlugin(PixiPlugin);
+PixiPlugin.registerPIXI(PIXI);
 
 export class Item {
     constructor(color = "#000", x = 0, y = 0) {
         this.color = color;
+        this.isSelected = false;
 
         const graphics = this.createGraphics(this.color);
 
@@ -19,15 +24,14 @@ export class Item {
 
 
         this.container.on("pointerdown", () => {
-            console.log("action 2")
-            this.container.scale.set(1.1)
-
             gsap.to(this.container, {
-                // x: "+=10",
+                pixi: {
+                    scale: 1.1
+                },
                 duration: 0.3,
-                onComplete: () => {
-                    console.log("this thing done")
-                }
+                // onComplete: () => {
+                //     this.container.scale.set(1)
+                // }
             })
         })
     }
@@ -39,7 +43,12 @@ export class Item {
         graphics.beginFill(color, 1);
         graphics.drawCircle(0, 0, 45);
         graphics.endFill();
+        graphics.name = "Item"
 
         return graphics;
+    }
+
+    select() {
+        this.isSelected = true;
     }
 }
