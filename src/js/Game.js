@@ -2,6 +2,8 @@ import * as PIXI from "pixi.js";
 import { Grid } from "./Grid";
 
 export class Game {
+    currentItem = {};
+
     constructor() {
         this.container = new PIXI.Container();
         this.container.x = window.innerWidth / 3;
@@ -31,6 +33,19 @@ export class Game {
     }
 
     onItemClick(item) {
-        console.log("show item", item)
+        // 1. Mark the Item as selected
+
+        // 2. Visually highlight the selected Item and Field below it
+
+        if (this.currentItem === item) {
+            console.log("already selected")
+            return;
+        }
+
+        console.log("freshly selected")
+
+        // item.select();
+
+        this.currentItem = item;
     }
 }
