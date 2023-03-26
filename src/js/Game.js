@@ -2,7 +2,7 @@ import * as PIXI from "pixi.js";
 import { Grid } from "./Grid";
 
 export class Game {
-    currentItem = {};
+    // currentItem = {};
 
     constructor() {
         this.container = new PIXI.Container();
@@ -33,19 +33,42 @@ export class Game {
     }
 
     onItemClick(item) {
-        // 1. Mark the Item as selected
 
+
+        // 1. Mark the Item as selected
         // 2. Visually highlight the selected Item and Field below it
 
         if (this.currentItem === item) {
-            console.log("already selected")
+            console.log("already selected");
+
             return;
         }
 
-        console.log("freshly selected")
+        // Check if two Items are neighbors
+        if (this.currentItem) {
+
+            this.swapItems(this.currentItem, item);
+        }
+
+        // console.log("freshly selected")
 
         // item.select();
-
         this.currentItem = item;
+    }
+
+    swapItems(currItem, nextItem) {
+        const x1 = nextItem.container.x;
+        const y1 = nextItem.container.y;
+
+        const x2 = currItem.container.x;
+        const y2 = currItem.container.y;
+
+        console.log("currItem", currItem);
+        console.log("nextItem", nextItem);
+
+        // console.log("x, y", x, y)
+
+        currItem.moveTo(x1, y1);
+        nextItem.moveTo(x2, y2);
     }
 }

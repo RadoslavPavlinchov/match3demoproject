@@ -51,4 +51,13 @@ export class Item {
     select() {
         this.isSelected = true;
     }
+
+    moveTo(x, y) {
+        gsap.to(this.container, {
+            pixi: {
+                x: x,
+                y: y
+            }
+        })
+    }
 }
