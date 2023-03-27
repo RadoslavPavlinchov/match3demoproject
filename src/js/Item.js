@@ -23,17 +23,17 @@ export class Item {
         this.container.addChild(graphics);
 
 
-        this.container.on("pointerdown", () => {
-            gsap.to(this.container, {
-                pixi: {
-                    scale: 1.1
-                },
-                duration: 0.3,
-                // onComplete: () => {
-                //     this.container.scale.set(1)
-                // }
-            })
-        })
+        // this.container.on("pointerdown", () => {
+        //     gsap.to(this.container, {
+        //         pixi: {
+        //             scale: 1.1
+        //         },
+        //         duration: 0.3,
+        //         // onComplete: () => {
+        //         //     this.container.scale.set(1)
+        //         // }
+        //     })
+        // })
     }
 
     createGraphics(color) {
@@ -50,6 +50,32 @@ export class Item {
 
     select() {
         this.isSelected = true;
+
+        gsap.to(this.container, {
+            pixi: {
+                scale: 1.1
+            },
+            duration: 0.3,
+            // onComplete: () => {
+            //     this.container.scale.set(1)
+            // }
+        })
+    }
+
+    deselect() {
+        this.isSelected = false;
+
+        // gsap.killTweensOf(this.container)
+
+        gsap.to(this.container, {
+            pixi: {
+                scale: 1
+            },
+            duration: 0.1,
+            // onComplete: () => {
+            //     this.container.scale.set(1)
+            // }
+        })
     }
 
     moveTo(x, y) {
