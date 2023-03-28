@@ -6,8 +6,8 @@ export class Game {
 
     constructor() {
         this.container = new PIXI.Container();
-        this.container.x = window.innerWidth / 3;
-        this.container.y = 50;
+        // this.container.x = window.innerWidth / 3;
+        // this.container.y = 50;
 
         // this.createBackground();
 

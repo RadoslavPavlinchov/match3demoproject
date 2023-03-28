@@ -13,5 +13,10 @@ export const Config = {
         rows: 6,
         cols: 6
     },
+    field: {
+        width: 100,
+        height: 100
+    },
+
     startScene: Game,
 }

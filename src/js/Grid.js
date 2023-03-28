@@ -15,6 +15,8 @@ export class Grid {
         this.cols = App.config.board.cols;
 
         this.create();
+
+        this.alignPosition();
     }
 
     create() {
@@ -54,5 +56,15 @@ export class Grid {
 
         this.items.push(item);
         this.container.addChild(item.container);
+    }
+
+    alignPosition() {
+        const { width, height } = App.config.field;
+
+        const gridWidth = width * this.cols;
+        const gridHeight = height * this.rows;
+
+        this.container.x = (window.innerWidth - gridWidth) / 2
+        this.container.y = (window.innerHeight - gridHeight) / 2
     }
 }
