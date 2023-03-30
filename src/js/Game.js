@@ -6,13 +6,8 @@ export class Game {
 
     constructor() {
         this.container = new PIXI.Container();
-        // this.container.x = window.innerWidth / 3;
-        // this.container.y = 50;
-
-        // this.createBackground();
 
         this.grid = this.createGrid();
-
         this.grid.container.on("itemClick", this.onItemClick, this);
     }
 
@@ -40,38 +35,29 @@ export class Game {
         // 2. Visually highlight the selected Item and Field below it
 
         if (this.currentItem === item) {
-            console.log("already selected");
-
             return;
         }
+
 
         // Check if two Items are neighbors
         if (this.currentItem) {
 
             if (!this.isAdjacent(this.currentItem, item)) {
-
-                this.currentItem.deselect();
-
-                this.currentItem = item;
+                this.deselectItem();
+                this.selectItem(item);
                 return;
             }
-
-            console.log("SWAP")
 
             this.swapItems(this.currentItem, item);
             this.currentItem = null;
             return;
         }
 
-        console.log("freshly selected")
 
-        this.currentItem = item;
-        this.currentItem.select();
+        this.selectItem(item);
     }
 
     isAdjacent(item1, item2) {
-        console.log(this)
-
         const xOffset = 50;
         const yOffset = 50;
 
@@ -95,22 +81,43 @@ export class Game {
     }
 
     swapItems(currItem, nextItem) {
-        const x1 = nextItem.container.x;
-        const y1 = nextItem.container.y;
+        const x1 = currItem.container.x;
+        const y1 = currItem.container.y;
 
-        const x2 = currItem.container.x;
-        const y2 = currItem.container.y;
+        const x2 = nextItem.container.x;
+        const y2 = nextItem.container.y;
 
-
-        currItem.moveTo(x1, y1);
-        nextItem.moveTo(x2, y2);
+        currItem.moveTo(x2, y2);
+        nextItem.moveTo(x1, y1);
 
         currItem.deselect();
+        currItem.field.deselect();
+
         nextItem.deselect();
+
+        const currField = currItem.field;
+        const nextField = nextItem.field;
+
+        currField.item = nextItem;
+        nextItem.field = currField;
+
+        nextField.item = currItem;
+        currItem.field = nextField;
 
         currItem = null;
         nextItem = null;
+    }
 
-        console.log(currItem, nextItem)
+    selectItem(item) {
+        this.currentItem = item;
+        this.currentItem.select();
+        this.currentItem.field.select();
+    }
+
+    deselectItem() {
+        this.currentItem.deselect();
+        this.currentItem.field.deselect();
+
+        this.currentItem = null;
     }
 }

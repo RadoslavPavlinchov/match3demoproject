@@ -48,11 +48,14 @@ export class Grid {
         const randomColor = App.config.itemsColors[Utils.getRandomInt(0, App.config.itemsColors.length - 1)];
         const { x, y } = field.position;
 
+
         const item = new Item(randomColor, x, y);
 
         item.container.on("pointerdown", () => {
             this.container.emit("itemClick", item)
         })
+
+        field.setItem(item);
 
         this.items.push(item);
         this.container.addChild(item.container);

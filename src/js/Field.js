@@ -22,11 +22,38 @@ export class Field {
 
     createGraphics() {
         const graphics = new PIXI.Graphics();
-        graphics.lineStyle(5, 0xFFBD01, 1);
+        graphics.lineStyle(2, 0xFFBD01, 1);
         graphics.beginFill(0xC34288);
         graphics.drawRect(this.position.x, this.position.y, this.width, this.height);
         graphics.endFill();
 
         this.container.addChild(graphics);
+    }
+
+    setItem(item) {
+        this.item = item;
+        item.field = this;
+    }
+
+    select() {
+        const graphics = this.container.getChildAt(0);
+
+        graphics.clear()
+
+        graphics.lineStyle(2, 0xFFBD01, 1);
+        graphics.beginFill(0xffffff);
+        graphics.drawRect(this.position.x, this.position.y, this.width, this.height);
+        graphics.endFill();
+    }
+
+    deselect() {
+        const graphics = this.container.getChildAt(0);
+
+        graphics.clear()
+
+        graphics.lineStyle(2, 0xFFBD01, 1);
+        graphics.beginFill(0xC34288);
+        graphics.drawRect(this.position.x, this.position.y, this.width, this.height);
+        graphics.endFill();
     }
 }
