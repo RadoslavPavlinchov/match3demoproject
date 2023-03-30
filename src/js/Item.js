@@ -39,7 +39,7 @@ export class Item {
     createGraphics(color) {
         const graphics = new PIXI.Graphics();
 
-        graphics.lineStyle(0);
+        graphics.lineStyle(2, 0x333333, 0.5);
         graphics.beginFill(color, 1);
         graphics.drawCircle(0, 0, 45);
         graphics.endFill();
@@ -53,9 +53,9 @@ export class Item {
 
         gsap.to(this.container, {
             pixi: {
-                scale: 1.1
+                scale: 1.05
             },
-            duration: 0.3,
+            duration: 0.2,
             // onComplete: () => {
             //     this.container.scale.set(1)
             // }
