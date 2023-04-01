@@ -5,10 +5,34 @@ export class Game {
     // currentItem = {};
 
     constructor() {
+        this.directionsMap = {
+            "top": () => {
+                console.log("top")
+            },
+            "right": () => {
+                console.log("right")
+            },
+            "bottom": () => {
+                console.log("bottom")
+            },
+            "left": () => {
+                console.log("left")
+            }
+        }
+
+
+
         this.container = new PIXI.Container();
 
         this.grid = this.createGrid();
         this.grid.container.on("itemClick", this.onItemClick, this);
+        this.grid.container.on("itemPointerUp", this.itemPointerUp, this);
+
+
+        this.grid.items.forEach(item => {
+            item.container.on("pointerdown", this.onPointerDownHandler, this)
+            item.container.on("pointerup", this.onPointerUpHandler, this)
+        })
     }
 
     createBackground() {
@@ -27,35 +51,35 @@ export class Game {
         return grid;
     }
 
-    onItemClick(item) {
-        // Add a different type of movement:
-        //  - slide/swipe 
+    // onItemClick(item) {
+    //     // Add a different type of movement:
+    //     //  - slide/swipe 
 
-        // 1. Mark the Item as selected
-        // 2. Visually highlight the selected Item and Field below it
+    //     // 1. Mark the Item as selected
+    //     // 2. Visually highlight the selected Item and Field below it
 
-        if (this.currentItem === item) {
-            return;
-        }
-
-
-        // Check if two Items are neighbors
-        if (this.currentItem) {
-
-            if (!this.isAdjacent(this.currentItem, item)) {
-                this.deselectItem();
-                this.selectItem(item);
-                return;
-            }
-
-            this.swapItems(this.currentItem, item);
-            this.currentItem = null;
-            return;
-        }
+    //     if (this.currentItem === item) {
+    //         return;
+    //     }
 
 
-        this.selectItem(item);
-    }
+    //     // Check if two Items are neighbors
+    //     if (this.currentItem) {
+
+    //         if (!this.isAdjacent(this.currentItem, item)) {
+    //             this.deselectItem();
+    //             this.selectItem(item);
+    //             return;
+    //         }
+
+    //         this.swapItems(this.currentItem, item);
+    //         this.currentItem = null;
+    //         return;
+    //     }
+
+
+    //     this.selectItem(item);
+    // }
 
     isAdjacent(item1, item2) {
         const xOffset = 50;
@@ -119,5 +143,115 @@ export class Game {
         this.currentItem.field.deselect();
 
         this.currentItem = null;
+    }
+
+    onPointerDownHandler(e) {
+        this.startX = e.global.x;
+        this.startY = e.global.y;
+
+        // console.log("event down ---->", this.startX, this.startY)
+    }
+
+
+    onPointerUpHandler(e) {
+        this.endX = e.global.x;
+        this.endY = e.global.y;
+
+        // console.log("event up ---->", this.endX, this.endY)
+
+        const diffX = this.startX - this.endX;
+        const diffY = this.startY - this.endY;
+
+        // console.log("diffs", diffX, diffY)
+
+        if (Math.abs(diffX) > Math.abs(diffY)) {
+            // HORIZONTAL SWIPE
+            console.log("HORIZONTAL SWIPE")
+
+            if (diffX > 0) {
+
+                this.swipeHandler("left");
+
+            } else {
+
+                this.swipeHandler("right");
+            }
+
+        } else {
+            // VERTICAL SWIPE
+            console.log("VERTICAL SWIPE")
+
+            if (diffY > 0) {
+
+                this.swipeHandler("top");
+            } else {
+
+                this.swipeHandler("bottom");
+            }
+        }
+    }
+
+    swipeHandler(direction) {
+        this.directionsMap[direction]();
+    }
+
+    onItemClick(item) {
+        // Add a different type of movement:
+        //  - slide/swipe 
+
+        // 1. Mark the Item as selected
+        // 2. Visually highlight the selected Item and Field below it
+
+
+        if (this.currentItem === item) {
+            return;
+        }
+
+
+
+        // Check if two Items are neighbors
+        if (this.currentItem) {
+
+            if (this.currentItem !== item) {
+                this.deselectItem();
+                this.selectItem(item);
+                return;
+            }
+
+            // this.swapItems(this.currentItem, item);
+            // this.currentItem = null;
+            // return;
+        }
+
+
+        console.log("curr item", item)
+        this.selectItem(item);
+    }
+
+    itemPointerUp(item) {
+
+        if (this.currentItem === item) {
+            return;
+        }
+
+
+        // Check if two Items are neighbors
+        if (this.currentItem) {
+
+            if (!this.isAdjacent(this.currentItem, item)) {
+                this.deselectItem();
+                console.log("next item", item)
+                // this.selectItem(item);
+                return;
+            }
+
+            this.swapItems(this.currentItem, item);
+            this.currentItem = null;
+
+
+            console.log("FINAL CURR ITEM", this.currentItem)
+            return;
+        }
+
     }
 }

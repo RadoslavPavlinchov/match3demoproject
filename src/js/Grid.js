@@ -51,9 +51,14 @@ export class Grid {
 
         const item = new Item(randomColor, x, y);
 
+        // Move those two event handlers to the Item class
         item.container.on("pointerdown", () => {
             this.container.emit("itemClick", item)
         })
+        item.container.on("pointerup", () => {
+            this.container.emit("itemPointerUp", item)
+        })
+
 
         field.setItem(item);
 
