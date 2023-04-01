@@ -22,8 +22,8 @@ export class Field {
 
     createGraphics() {
         const graphics = new PIXI.Graphics();
-        graphics.lineStyle(2, 0xFFBD01, 1);
-        graphics.beginFill(0xC34288);
+        graphics.lineStyle(2, 0xffffff, 1);
+        graphics.beginFill(0xBDBDBD);
         graphics.drawRect(this.position.x, this.position.y, this.width, this.height);
         graphics.endFill();
 
@@ -51,8 +51,8 @@ export class Field {
 
         graphics.clear()
 
-        graphics.lineStyle(2, 0xFFBD01, 1);
-        graphics.beginFill(0xC34288);
+        graphics.lineStyle(2, 0xffffff, 1);
+        graphics.beginFill(0xBDBDBD);
         graphics.drawRect(this.position.x, this.position.y, this.width, this.height);
         graphics.endFill();
     }
