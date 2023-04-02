@@ -8,6 +8,8 @@ export class Grid {
     constructor() {
         this.container = new PIXI.Container();
 
+        this.gridRows = [];
+
         this.fields = [];
         this.items = [];
 
@@ -22,13 +24,23 @@ export class Grid {
     create() {
         this.createFields();
         this.createItems();
+
+        // console.log("this should be", this.gridRows)
     }
 
     createFields() {
-        for (let i = 0; i < this.rows; i++) {
-            for (let j = 0; j < this.cols; j++) {
-                this.createField(i, j)
+        for (let row = 0; row < this.cols; row++) {
+
+            const gridRow = [];
+
+            for (let col = 0; col < this.rows; col++) {
+
+                const field = this.createField(row, col)
+
+                gridRow.push(field);
             }
+
+            this.gridRows.push(gridRow);
         }
     }
 
@@ -36,6 +48,8 @@ export class Grid {
         const field = new Field(row, col);
         this.fields.push(field);
         this.container.addChild(field.container);
+
+        return field;
     }
 
     createItems() {
@@ -55,9 +69,9 @@ export class Grid {
         item.container.on("pointerdown", () => {
             this.container.emit("itemClick", item)
         })
-        item.container.on("pointerup", () => {
-            this.container.emit("itemPointerUp", item)
-        })
+        // item.container.on("pointerup", () => {
+        //     this.container.emit("itemPointerUp", item)
+        // })
 
 
         field.setItem(item);
