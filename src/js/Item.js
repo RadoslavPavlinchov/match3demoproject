@@ -9,7 +9,7 @@ export class Item {
         const graphics = this.createGraphics(this.color);
 
         this.container = new PIXI.Container();
-        this.container.name = "Item"
+        this.container.name = "Item";
         this.container.x = x + 50;
         this.container.y = y + 50;
 
@@ -74,12 +74,13 @@ export class Item {
         })
     }
 
-    moveTo(x, y) {
+    moveTo(x, y, onComplete) {
         gsap.to(this.container, {
             pixi: {
                 x: x,
                 y: y
-            }
+            },
+            onComplete: onComplete
         })
     }
 }
