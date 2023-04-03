@@ -1,5 +1,6 @@
 import * as PIXI from "pixi.js";
 import { Grid } from "./Grid";
+import { CombinationsManager } from "./CombinationsManager";
 
 export class Game {
     // currentItem = {};
@@ -45,6 +46,9 @@ export class Game {
             item.container.on("pointerup", this.onPointerUpHandler, this)
             item.container.on("pointermove", this.onPointerMoveHandler, this)
         })
+
+        this.combinationsManager = new CombinationsManager(this.grid);
+
     }
 
     createBackground() {
