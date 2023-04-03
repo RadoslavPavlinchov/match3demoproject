@@ -130,14 +130,14 @@ export class Game {
         currItem.moveTo(x2, y2, () => {
             isComplete1 = true
             if (isComplete2) {
-                this.onSwapCompleteHandler()
+                this.onSwapCompleteHandler(currItem, nextItem)
             }
 
         });
         nextItem.moveTo(x1, y1, () => {
             isComplete2 = true
             if (isComplete1) {
-                this.onSwapCompleteHandler()
+                this.onSwapCompleteHandler(currItem, nextItem)
             }
         });
 
@@ -146,17 +146,17 @@ export class Game {
 
         nextItem.deselect();
 
-        const currField = currItem.field;
-        const nextField = nextItem.field;
+        // const currField = currItem.field;
+        // const nextField = nextItem.field;
 
-        currField.item = nextItem;
-        nextItem.field = currField;
+        // currField.item = nextItem;
+        // nextItem.field = currField;
 
-        nextField.item = currItem;
-        currItem.field = nextField;
+        // nextField.item = currItem;
+        // currItem.field = nextField;
 
-        currItem = null;
-        nextItem = null;
+        // currItem = null;
+        // nextItem = null;
     }
 
     selectItem(item) {
@@ -384,9 +384,13 @@ export class Game {
         }
     }
 
-    onSwapCompleteHandler() {
+    onSwapCompleteHandler(current, next) {
+        this.grid.swap(current, next)
+
         this.isSwapping = false;
 
         this.currentItem = null;
+
+
     }
 }

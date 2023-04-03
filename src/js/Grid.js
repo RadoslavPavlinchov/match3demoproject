@@ -89,4 +89,18 @@ export class Grid {
         this.container.x = (window.innerWidth - gridWidth) / 2
         this.container.y = (window.innerHeight - gridHeight) / 2
     }
+
+    swap(currItem, nextItem) {
+        const currField = currItem.field;
+        const nextField = nextItem.field;
+
+        currField.item = nextItem;
+        nextItem.field = currField;
+
+        nextField.item = currItem;
+        currItem.field = nextField;
+
+        currItem = null;
+        nextItem = null;
+    }
 }
