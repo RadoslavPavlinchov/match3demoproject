@@ -9,4 +9,10 @@ export class CombinationsManager {
 
         console.log("this.grid", this.grid)
     }
+
+    findCombinations() {
+        this.grid.fields.forEach(field => {
+            console.log("field", field)
+        });
+    }
 } 

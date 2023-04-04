@@ -1,4 +1,4 @@
-import { Game } from "./Game";
+import { Game } from "./scenes/Game";
 
 export const Config = {
     itemsColors: [

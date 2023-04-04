@@ -1,6 +1,6 @@
 import * as PIXI from "pixi.js";
-import { Grid } from "./Grid";
-import { CombinationsManager } from "./CombinationsManager";
+import { Grid } from "../components/Grid";
+import { CombinationsManager } from "../components/CombinationsManager";
 
 export class Game {
     // currentItem = {};
@@ -389,6 +389,11 @@ export class Game {
     }
 
     onSwapCompleteHandler(current, next) {
+        console.log("onSwapCompleteHandler")
+
+        const combinations = this.combinationsManager.findCombinations();
+
+
         this.grid.swap(current, next)
 
         this.isSwapping = false;
