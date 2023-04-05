@@ -2,6 +2,8 @@ import * as PIXI from "pixi.js"
 import { gsap } from "gsap";
 
 export class Item {
+    isMarked = false;
+
     constructor(color = "#000", x = 0, y = 0) {
         this.color = color;
         this.isSelected = false;

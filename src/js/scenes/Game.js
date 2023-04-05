@@ -389,17 +389,12 @@ export class Game {
     }
 
     onSwapCompleteHandler(current, next) {
-        console.log("onSwapCompleteHandler")
-
-        const combinations = this.combinationsManager.findCombinations();
-
-
         this.grid.swap(current, next)
 
+        const combinations = this.combinationsManager.findCombinations();
+        console.log("combinations", combinations)
+
         this.isSwapping = false;
-
         this.currentItem = null;
-
-
     }
 }
