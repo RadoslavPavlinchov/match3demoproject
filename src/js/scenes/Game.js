@@ -394,6 +394,8 @@ export class Game {
         const combinations = this.combinationsManager.findCombinations();
         console.log("combinations", combinations)
 
+        combinations.forEach(field => field.item.container.visible = false)
+
         this.isSwapping = false;
         this.currentItem = null;
     }
