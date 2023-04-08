@@ -392,11 +392,16 @@ export class Game {
         this.grid.swap(current, next)
 
         const combinations = this.combinationsManager.findCombinations();
-        console.log("combinations", combinations)
 
-        combinations.forEach(field => field.item.container.visible = false)
+        this.destroyCombinations(combinations);
 
         this.isSwapping = false;
         this.currentItem = null;
+    }
+
+    destroyCombinations(combinations) {
+        combinations.forEach(field => {
+            field.item.destroy();
+        })
     }
 }

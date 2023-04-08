@@ -85,4 +85,13 @@ export class Item {
             onComplete: onComplete
         })
     }
+
+    destroy() {
+        this.container.removeChildren()
+
+        if (this.field) {
+            this.field.item = null;
+            this.field = null
+        }
+    }
 }
