@@ -391,6 +391,7 @@ export class Game {
         const combinations = this.combinationsManager.findCombinations();
 
         this.destroyCombinations(combinations);
+        this.processFallDownOfItems();
 
         this.isSwapping = false;
         this.currentItem = null;
@@ -400,5 +401,50 @@ export class Game {
         combinations.forEach(field => {
             field.item.destroy();
         })
+    }
+
+    processFallDownOfItems() {
+        // start with the rows in reverse order - from bottom to top
+        for (let i = this.grid.rows.length - 1; i >= 0; i--) {
+
+            const row = this.grid.rows[i];
+
+            // start with each column in normal order - from left to right
+            for (let j = 0; j < row.length; j++) {
+                const field = row[j];
+
+                // Skip an iteration if the Field has Item
+                if (field.item) {
+                    continue;
+                }
+
+                // Process an empty Field
+                this.fallTo(field)
+            }
+        }
+    }
+
+    fallTo(emptyField) {
+        // Search in each row above the one that we found the empty Field
+        for (let row = emptyField.row - 1; row >= 0; row--) {
+
+            // Find a Field with Item inside
+            const fieldWithItem = this.grid.getField(row, emptyField.col);
+            if (fieldWithItem.item) {
+
+                // Swap the Items inside of both fields
+                const fieldItem = fieldWithItem.item;
+
+                fieldItem.field = emptyField
+                emptyField.item = fieldItem;
+
+                fieldWithItem.item = null
+
+                // Process the fall down animation for the Item
+                fieldItem.fallDownTo(emptyField.position)
+
+                return
+            }
+        }
     }
 }

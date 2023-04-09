@@ -86,6 +86,10 @@ export class Item {
         })
     }
 
+    fallDownTo(pos) {
+        this.moveTo(pos.x + 50, pos.y + 50)
+    }
+
     destroy() {
         this.container.removeChildren()
 
