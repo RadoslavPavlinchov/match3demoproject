@@ -180,8 +180,6 @@ export class Game {
         // this.startX = e.global.x;
         // this.startY = e.global.y;
 
-
-
         this.startPos = this.currentItem.container.toLocal(e.data.global.clone());
 
         this.startRow = this.currentItem.field.row;
@@ -193,7 +191,6 @@ export class Game {
         // const selectedCircle = this.grid[row][col];
 
         // this.grid.fields[this.currentItem.field.col]
-        // console.log("action 1", this.grid.gridRows[this.currentItem.field.row][this.currentItem.field.col])
     }
 
 
@@ -346,7 +343,7 @@ export class Game {
             // Check if the user has swiped in a certain direction
             if (Math.abs(dx) > Math.abs(dy)) {
                 if (dx > r) {
-                    const adjacentItem = this.grid.gridRows[this.startRow][this.startCol + 1];
+                    const adjacentItem = this.grid.rows[this.startRow][this.startCol + 1];
 
                     if (!adjacentItem) {
                         return;
@@ -355,7 +352,7 @@ export class Game {
                     this.swipeHandler("right", adjacentItem)
                     return;
                 } else if (dx < -r) {
-                    const adjacentItem = this.grid.gridRows[this.startRow][this.startCol - 1];
+                    const adjacentItem = this.grid.rows[this.startRow][this.startCol - 1];
 
                     if (!adjacentItem) {
                         return;
@@ -366,7 +363,7 @@ export class Game {
                 }
             } else {
                 if (dy > r) {
-                    const adjacentItem = this.grid.gridRows[this.startRow + 1][this.startCol];
+                    const adjacentItem = this.grid.rows[this.startRow + 1][this.startCol];
 
                     if (!adjacentItem) {
                         return;
@@ -375,7 +372,7 @@ export class Game {
                     this.swipeHandler("down", adjacentItem)
                     return;
                 } else if (dy < -r) {
-                    const adjacentItem = this.grid.gridRows[this.startRow - 1][this.startCol];
+                    const adjacentItem = this.grid.rows[this.startRow - 1][this.startCol];
 
                     if (!adjacentItem) {
                         return;

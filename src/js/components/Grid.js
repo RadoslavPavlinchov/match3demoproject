@@ -5,16 +5,14 @@ import { Item } from "./Item";
 import { Utils } from "../Utils";
 
 export class Grid {
+    rows = [];
+    fields = [];
+    items = [];
+    rowsCount = App.config.board.rows;
+    colsCount = App.config.board.cols;
+
     constructor() {
         this.container = new PIXI.Container();
-
-        this.gridRows = [];
-
-        this.fields = [];
-        this.items = [];
-
-        this.rows = App.config.board.rows;
-        this.cols = App.config.board.cols;
 
         this.create();
 
@@ -24,23 +22,18 @@ export class Grid {
     create() {
         this.createFields();
         this.createItems();
-
-        // console.log("this should be", this.gridRows)
     }
 
     createFields() {
-        for (let row = 0; row < this.cols; row++) {
+        for (let row = 0; row < this.colsCount; row++) {
+            const row = [];
 
-            const gridRow = [];
-
-            for (let col = 0; col < this.rows; col++) {
-
+            for (let col = 0; col < this.rowsCount; col++) {
                 const field = this.createField(row, col)
-
-                gridRow.push(field);
+                row.push(field);
             }
 
-            this.gridRows.push(gridRow);
+            this.rows.push(row);
         }
     }
 
@@ -83,8 +76,8 @@ export class Grid {
     alignPosition() {
         const { width, height } = App.config.field;
 
-        const gridWidth = width * this.cols;
-        const gridHeight = height * this.rows;
+        const gridWidth = width * this.colsCount;
+        const gridHeight = height * this.rowsCount;
 
         this.container.x = (window.innerWidth - gridWidth) / 2
         this.container.y = (window.innerHeight - gridHeight) / 2
