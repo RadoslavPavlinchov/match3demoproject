@@ -12,20 +12,14 @@ export class CombinationsManager {
     findCombinations() {
         const combinations = [];
 
-        for (let row = 0; row < this.grid.gridRows.length; row++) {
+        for (let row = 0; row < this.grid.rows.length; row++) {
 
-            for (let col = 0; col < this.grid.gridRows[row].length - 2; col++) {
+            for (let col = 0; col < this.grid.rows[row].length - 2; col++) {
 
                 // check the next 3 fields 
-                const firstField = this.grid.gridRows[row][col];
-                const secondField = this.grid.gridRows[row][col + 1];
-                const thirdField = this.grid.gridRows[row][col + 2];
-
-                // check if the next item is valid
-                // if (!secondField || !thirdField) {
-                //     console.log("NO MORE ITEMS")
-                //     continue;
-                // }
+                const firstField = this.grid.rows[row][col];
+                const secondField = this.grid.rows[row][col + 1];
+                const thirdField = this.grid.rows[row][col + 2];
 
 
                 if ((firstField.item.color === secondField.item.color) && (secondField.item.color === thirdField.item.color)) {
@@ -50,25 +44,14 @@ export class CombinationsManager {
 
 
         // check the next 3 columns
-        for (let row = 0; row < this.grid.gridRows.length - 2; row++) {
+        for (let row = 0; row < this.grid.rows.length - 2; row++) {
 
-            for (let col = 0; col < this.grid.gridRows[row].length; col++) {
+            for (let col = 0; col < this.grid.rows[row].length; col++) {
 
                 // check the next 3 fields 
-                const firstField = this.grid.gridRows[row][col]
-                const secondField = this.grid.gridRows[row + 1][col];
-                const thirdField = this.grid.gridRows[row + 2][col];
-
-
-                // check if the next item is valid
-                // if (!secondRow || !thirdRow) {
-                //     console.log("NO MORE ITEMS")
-                //     continue;
-                // }
-
-                // const firstField = firstRow[row];
-                // const secondField = secondRow[row];
-                // const thirdField = thirdRow[row];
+                const firstField = this.grid.rows[row][col]
+                const secondField = this.grid.rows[row + 1][col];
+                const thirdField = this.grid.rows[row + 2][col];
 
 
                 if ((firstField.item.color === secondField.item.color) && (secondField.item.color === thirdField.item.color)) {
@@ -87,13 +70,7 @@ export class CombinationsManager {
                     combinations.push(firstField, secondField, thirdField)
                 }
             }
-
-
-
-
-
         }
-
 
         // reset the isMarked prop
         for (let i = 0; i < this.grid.items.length; i++) {
