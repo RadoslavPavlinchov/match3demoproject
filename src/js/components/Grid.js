@@ -6,8 +6,11 @@ import { Utils } from "../Utils";
 
 export class Grid {
     rows = [];
+    columns = [];
+
     fields = [];
     items = [];
+
     rowsCount = App.config.board.rows;
     colsCount = App.config.board.cols;
 
@@ -26,15 +29,24 @@ export class Grid {
 
     createFields() {
         for (let row = 0; row < this.colsCount; row++) {
-            const row = [];
-
+            const rowItems = [];
             for (let col = 0; col < this.rowsCount; col++) {
                 const field = this.createField(row, col)
-                row.push(field);
+                rowItems.push(field);
             }
-
-            this.rows.push(row);
+            this.rows.push(rowItems);
         }
+
+
+        for (let row = 0; row < this.rows.length; row++) {
+            const colItems = [];
+            for (let col = 0; col < this.colsCount; col++) {
+                const field = this.rows[col][row];
+                colItems.push(field);
+            }
+            this.columns.push(colItems);
+        }
+
     }
 
     createField(row, col) {
