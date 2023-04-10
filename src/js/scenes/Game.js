@@ -131,14 +131,15 @@ export class Game {
         let isComplete1 = false;
         let isComplete2 = false;
 
-        currItem.moveTo(x2, y2, () => {
+        currItem.moveTo(x2, y2, 0.1, "none").then(() => {
             isComplete1 = true
             if (isComplete2) {
                 this.onSwapCompleteHandler(currItem, nextItem)
             }
 
         });
-        nextItem.moveTo(x1, y1, () => {
+
+        nextItem.moveTo(x1, y1, 0.1, "none").then(() => {
             isComplete2 = true
             if (isComplete1) {
                 this.onSwapCompleteHandler(currItem, nextItem)

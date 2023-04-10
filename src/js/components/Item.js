@@ -76,18 +76,24 @@ export class Item {
         })
     }
 
-    moveTo(x, y, onComplete) {
-        gsap.to(this.container, {
-            pixi: {
-                x: x,
-                y: y
-            },
-            onComplete: onComplete
+    moveTo(x, y, duration, ease) {
+        return new Promise(resolve => {
+            gsap.to(this.container, {
+                pixi: {
+                    x: x,
+                    y: y
+                },
+                duration: duration,
+                ease: ease,
+                onComplete: () => {
+                    resolve();
+                }
+            })
         })
     }
 
     fallDownTo(pos) {
-        this.moveTo(pos.x + 50, pos.y + 50)
+        this.moveTo(pos.x + 50, pos.y + 50, 0.6, "bounce.out")
     }
 
     destroy() {
