@@ -392,7 +392,11 @@ export class Game {
         const combinations = this.combinationsManager.findCombinations();
 
         this.destroyCombinations(combinations);
-        this.processFallDownOfItems();
+        this.processFallDownOfItems().then(() => {
+            console.log("ALL ITEMS ARE DONE - BOARD READY");
+
+            this.createNewItems();
+        });
 
         this.isSwapping = false;
         this.currentItem = null;
@@ -405,24 +409,38 @@ export class Game {
     }
 
     processFallDownOfItems() {
-        // start with the rows in reverse order - from bottom to top
-        for (let i = this.grid.rows.length - 1; i >= 0; i--) {
+        return new Promise(resolve => {
+            let itemsStarted = 0;
+            let itemsCompleted = 0;
 
-            const row = this.grid.rows[i];
+            // start with the rows in reverse order - from bottom to top
+            for (let i = this.grid.rows.length - 1; i >= 0; i--) {
 
-            // start with each column in normal order - from left to right
-            for (let j = 0; j < row.length; j++) {
-                const field = row[j];
+                const row = this.grid.rows[i];
 
-                // Skip an iteration if the Field has Item
-                if (field.item) {
-                    continue;
+                // start with each column in normal order - from left to right
+                for (let j = 0; j < row.length; j++) {
+                    const field = row[j];
+
+                    // Skip an iteration if the Field has Item
+                    if (field.item) {
+                        continue;
+                    }
+
+                    itemsStarted += 1;
+
+                    // Process an empty Field
+                    this.fallTo(field).then(() => {
+                        itemsCompleted += 1;
+
+                        if (itemsCompleted >= itemsStarted) {
+                            resolve();
+                        }
+                    })
                 }
-
-                // Process an empty Field
-                this.fallTo(field)
             }
-        }
+        })
+
     }
 
     fallTo(emptyField) {
@@ -431,21 +449,25 @@ export class Game {
 
             // Find a Field with Item inside
             const fieldWithItem = this.grid.getField(row, emptyField.col);
-            if (fieldWithItem.item) {
 
+            if (fieldWithItem.item) {
                 // Swap the Items inside of both fields
                 const fieldItem = fieldWithItem.item;
 
-                fieldItem.field = emptyField
+                fieldItem.field = emptyField;
                 emptyField.item = fieldItem;
 
-                fieldWithItem.item = null
+                fieldWithItem.item = null;
+
 
                 // Process the fall down animation for the Item
-                fieldItem.fallDownTo(emptyField.position)
-
-                return
+                return fieldItem.fallDownTo(emptyField.position);
             }
         }
+
+
+        return Promise.resolve();
     }
+
+    createNewItems() { }
 }

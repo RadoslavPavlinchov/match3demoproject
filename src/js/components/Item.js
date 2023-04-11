@@ -93,7 +93,7 @@ export class Item {
     }
 
     fallDownTo(pos) {
-        this.moveTo(pos.x + 50, pos.y + 50, 0.6, "bounce.out")
+        return this.moveTo(pos.x + 50, pos.y + 50, 0.6, "bounce.out")
     }
 
     destroy() {
