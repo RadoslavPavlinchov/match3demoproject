@@ -83,6 +83,8 @@ export class Grid {
 
         this.items.push(item);
         this.container.addChild(item.container);
+
+        return item;
     }
 
     alignPosition() {

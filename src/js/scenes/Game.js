@@ -392,11 +392,16 @@ export class Game {
         const combinations = this.combinationsManager.findCombinations();
 
         this.destroyCombinations(combinations);
-        this.processFallDownOfItems().then(() => {
-            console.log("ALL ITEMS ARE DONE - BOARD READY");
+        this.processFallDownOfItems()
+            .then(() => {
+                // console.log("ALL ITEMS ARE DONE - BOARD READY");
+                this.createNewItems()
+            })
+            .then(() => {
 
-            this.createNewItems();
-        });
+                console.log("CHECK AGAIN")
+
+            })
 
         this.isSwapping = false;
         this.currentItem = null;
@@ -469,5 +474,28 @@ export class Game {
         return Promise.resolve();
     }
 
-    createNewItems() { }
+    createNewItems() {
+        return new Promise(resolve => {
+            const emptyFields = this.grid.fields.filter(field => !field.item);
+
+            const total = emptyFields.length;
+            let completed = 0;
+
+            emptyFields.forEach(field => {
+                const item = this.grid.createItem(field);
+
+                item.container.y = -200;
+
+                item.fallDownTo(field.position).then(() => {
+
+                    completed += 1;
+
+                    if (completed >= total) {
+                        console.log("completed, total", completed, total)
+                        resolve();
+                    }
+                })
+            })
+        })
+    }
 }
