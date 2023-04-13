@@ -390,18 +390,7 @@ export class Game {
         this.grid.swap(current, next)
 
         const combinations = this.combinationsManager.findCombinations();
-
-        this.destroyCombinations(combinations);
-        this.processFallDownOfItems()
-            .then(() => {
-                // console.log("ALL ITEMS ARE DONE - BOARD READY");
-                this.createNewItems()
-            })
-            .then(() => {
-
-                console.log("CHECK AGAIN")
-
-            })
+        this.processCombinations(combinations);
 
         this.isSwapping = false;
         this.currentItem = null;
@@ -411,6 +400,30 @@ export class Game {
         combinations.forEach(field => {
             field.item.destroy();
         })
+    }
+
+    processCombinations(combinations) {
+        this.destroyCombinations(combinations);
+
+        this.processFallDownOfItems()
+            .then(() => {
+                this.createNewItems()
+            })
+            .then(() => {
+                this.onFallDownComplete();
+            })
+    }
+
+    onFallDownComplete() {
+        const combinations = this.combinationsManager.findCombinations();
+
+        if (combinations.length > 0) {
+            this.processCombinations(combinations)
+        } else {
+
+            // IDLE STATE / WAIT FOR USER INPUT
+
+        }
     }
 
     processFallDownOfItems() {
