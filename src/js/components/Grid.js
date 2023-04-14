@@ -9,7 +9,6 @@ export class Grid {
     columns = [];
 
     fields = [];
-    items = [];
 
     rowsCount = App.config.board.rows;
     colsCount = App.config.board.cols;
@@ -81,7 +80,6 @@ export class Grid {
 
         field.setItem(item);
 
-        this.items.push(item);
         this.container.addChild(item.container);
 
         return item;

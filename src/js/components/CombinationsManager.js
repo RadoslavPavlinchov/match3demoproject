@@ -6,7 +6,7 @@ export class CombinationsManager {
     }
 
     init() {
-        console.log("this.grid", this.grid)
+        // console.log("this.grid", this.grid)
     }
 
     findCombinations() {
@@ -26,14 +26,14 @@ export class CombinationsManager {
 
                     console.log("MATCH")
 
-                    if (firstField.item.isMarked || secondField.item.isMarked || thirdField.item.isMarked) {
+                    if (firstField.isMarked || secondField.isMarked || thirdField.isMarked) {
                         console.log("ALREADY MARKED")
                         continue;
                     }
 
-                    firstField.item.isMarked = true;
-                    secondField.item.isMarked = true;
-                    thirdField.item.isMarked = true;
+                    firstField.isMarked = true;
+                    secondField.isMarked = true;
+                    thirdField.isMarked = true;
 
                     combinations.push(firstField, secondField, thirdField)
                 }
@@ -58,14 +58,14 @@ export class CombinationsManager {
 
                     console.log("MATCH")
 
-                    if (firstField.item.isMarked || secondField.item.isMarked || thirdField.item.isMarked) {
+                    if (firstField.isMarked || secondField.isMarked || thirdField.isMarked) {
                         console.log("ALREADY MARKED")
                         continue;
                     }
 
-                    firstField.item.isMarked = true;
-                    secondField.item.isMarked = true;
-                    thirdField.item.isMarked = true;
+                    firstField.isMarked = true;
+                    secondField.isMarked = true;
+                    thirdField.isMarked = true;
 
                     combinations.push(firstField, secondField, thirdField)
                 }
@@ -73,9 +73,9 @@ export class CombinationsManager {
         }
 
         // reset the isMarked prop
-        for (let i = 0; i < this.grid.items.length; i++) {
-            const item = this.grid.items[i];
-            if (item.isMarked) item.isMarked = false;
+        for (let i = 0; i < this.grid.fields.length; i++) {
+            const field = this.grid.fields[i];
+            if (field.isMarked) field.isMarked = false;
         }
 
         return combinations

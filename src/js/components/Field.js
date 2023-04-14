@@ -1,6 +1,8 @@
 import * as PIXI from "pixi.js";
 
 export class Field {
+    isMarked = false;
+
     constructor(row, col) {
         this.row = row;
         this.col = col;

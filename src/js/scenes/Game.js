@@ -41,10 +41,10 @@ export class Game {
         // this.grid.container.on("itemPointerUp", this.itemPointerUp, this);
 
 
-        this.grid.items.forEach(item => {
-            item.container.on("pointerdown", this.onPointerDownHandler, this)
-            item.container.on("pointerup", this.onPointerUpHandler, this)
-            item.container.on("pointermove", this.onPointerMoveHandler, this)
+        this.grid.fields.forEach(field => {
+            field.item.container.on("pointerdown", this.onPointerDownHandler, this)
+            field.item.container.on("pointerup", this.onPointerUpHandler, this)
+            field.item.container.on("pointermove", this.onPointerMoveHandler, this)
         })
 
         this.combinationsManager = new CombinationsManager(this.grid);
