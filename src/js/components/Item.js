@@ -11,7 +11,7 @@ export class Item {
         const graphics = this.createGraphics(this.color);
 
         this.container = new PIXI.Container();
-        this.container.name = "Item";
+        this.container.name = "itemContainer";
         this.container.x = x + 50;
         this.container.y = y + 50;
 
@@ -41,7 +41,7 @@ export class Item {
         graphics.beginFill(color, 1);
         graphics.drawCircle(0, 0, 45);
         graphics.endFill();
-        graphics.name = "Item"
+        graphics.name = "itemGraphics"
 
         return graphics;
     }
@@ -97,7 +97,9 @@ export class Item {
     }
 
     destroy() {
-        this.container.removeChildren()
+        this.container.getChildByName("itemGraphics").destroy();
+
+        this.container.destroy();
 
         if (this.field) {
             this.field.item = null;
