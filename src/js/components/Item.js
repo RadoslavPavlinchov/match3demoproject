@@ -8,13 +8,7 @@ export class Item {
 
         const graphics = this.createGraphics(this.color);
 
-        this.container = new PIXI.Container();
-        this.container.name = "itemContainer";
-        this.container.x = x + 50;
-        this.container.y = y + 50;
-
-        this.container.interactive = true;
-        this.container.cursor = "pointer";
+        this.container = this.createContainer(x, y);
 
         this.container.addChild(graphics);
     }
@@ -29,6 +23,18 @@ export class Item {
         graphics.name = "itemGraphics"
 
         return graphics;
+    }
+
+    createContainer(x, y) {
+        const container = new PIXI.Container();
+        container.name = "itemContainer";
+        container.x = x + 50;
+        container.y = y + 50;
+
+        container.interactive = true;
+        container.cursor = "pointer";
+
+        return container;
     }
 
     select() {
