@@ -73,10 +73,6 @@ export class Grid {
         item.container.on("pointerdown", () => {
             this.container.emit("itemClick", item)
         })
-        // item.container.on("pointerup", () => {
-        //     this.container.emit("itemPointerUp", item)
-        // })
-
 
         field.setItem(item);
 

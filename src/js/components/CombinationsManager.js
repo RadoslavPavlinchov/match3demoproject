@@ -24,10 +24,7 @@ export class CombinationsManager {
 
                 if ((firstField.item.color === secondField.item.color) && (secondField.item.color === thirdField.item.color)) {
 
-                    console.log("MATCH")
-
                     if (firstField.isMarked || secondField.isMarked || thirdField.isMarked) {
-                        console.log("ALREADY MARKED")
                         continue;
                     }
 
@@ -56,10 +53,7 @@ export class CombinationsManager {
 
                 if ((firstField.item.color === secondField.item.color) && (secondField.item.color === thirdField.item.color)) {
 
-                    console.log("MATCH")
-
                     if (firstField.isMarked || secondField.isMarked || thirdField.isMarked) {
-                        console.log("ALREADY MARKED")
                         continue;
                     }
 

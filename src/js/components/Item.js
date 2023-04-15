@@ -2,8 +2,6 @@ import * as PIXI from "pixi.js"
 import { gsap } from "gsap";
 
 export class Item {
-    // isMarked = false;
-
     constructor(color = "#000", x = 0, y = 0) {
         this.color = color;
         this.isSelected = false;
@@ -19,19 +17,6 @@ export class Item {
         this.container.cursor = "pointer";
 
         this.container.addChild(graphics);
-
-
-        // this.container.on("pointerdown", () => {
-        //     gsap.to(this.container, {
-        //         pixi: {
-        //             scale: 1.1
-        //         },
-        //         duration: 0.3,
-        //         // onComplete: () => {
-        //         //     this.container.scale.set(1)
-        //         // }
-        //     })
-        // })
     }
 
     createGraphics(color) {
@@ -53,26 +38,18 @@ export class Item {
             pixi: {
                 scale: 1.05
             },
-            duration: 0.2,
-            // onComplete: () => {
-            //     this.container.scale.set(1)
-            // }
+            duration: 0.2
         })
     }
 
     deselect() {
         this.isSelected = false;
 
-        // gsap.killTweensOf(this.container)
-
         gsap.to(this.container, {
             pixi: {
                 scale: 1
             },
-            duration: 0.1,
-            // onComplete: () => {
-            //     this.container.scale.set(1)
-            // }
+            duration: 0.1
         })
     }
 

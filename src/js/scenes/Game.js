@@ -178,84 +178,22 @@ export class Game {
     }
 
     onPointerDownHandler(e) {
-        // this.startX = e.global.x;
-        // this.startY = e.global.y;
-
         this.startPos = this.currentItem.container.toLocal(e.data.global.clone());
 
         this.startRow = this.currentItem.field.row;
         this.startCol = this.currentItem.field.col;
-
-        // const { x, y } = this.currentItem.container;
-        // const col = (x - 50) / 100;
-        // const row = (y - 50) / 100;
-        // const selectedCircle = this.grid[row][col];
-
-        // this.grid.fields[this.currentItem.field.col]
     }
 
 
     onPointerUpHandler(e) {
-        // this.endX = e.global.x;
-        // this.endY = e.global.y;
-
-        // // console.log("event up ---->", this.endX, this.endY)
-
-        // const diffX = this.startX - this.endX;
-        // const diffY = this.startY - this.endY;
-
-        // // console.log("diffs", diffX, diffY)
-
-        // if (Math.abs(diffX) > Math.abs(diffY)) {
-        //     // HORIZONTAL SWIPE
-        //     console.log("HORIZONTAL SWIPE")
-
-        //     if (diffX > 0) {
-
-        //         this.swipeHandler("left");
-
-        //     } else {
-
-        //         this.swipeHandler("right");
-        //     }
-
-        // } else {
-        //     // VERTICAL SWIPE
-        //     console.log("VERTICAL SWIPE")
-
-        //     if (diffY > 0) {
-
-        //         this.swipeHandler("top");
-        //     } else {
-
-        //         this.swipeHandler("bottom");
-        //     }
-        // }
-
-
-
-
-
         // Check if two Items are neighbors
         if (this.currentItem) {
-
-
             this.deselectItem();
-            // this.selectItem(item);
-
-
-
         }
 
 
-
-
         this.currentItem = null;
-        // this.startX = null;
-        // this.startY = null;
         this.startPos = null;
-
-        console.log("action 3", this.currentItem)
     }
 
     swipeHandler(direction, adjacentItem) {
@@ -273,27 +211,6 @@ export class Game {
     // ---------- USED IN SWIPE MOVEMENT ----------
     onItemClick(item) {
 
-        // if (this.currentItem === item) {
-        //     return;
-        // }
-
-
-        // // Check if two Items are neighbors
-        // if (this.currentItem) {
-
-
-        //     if (this.currentItem !== item) {
-        //         this.deselectItem();
-        //         this.selectItem(item);
-        //         return;
-        //     }
-
-        //     // this.swapItems(this.currentItem, item);
-        //     // this.currentItem = null;
-        //     // return;
-        // }
-
-
         this.selectItem(item);
     }
 
@@ -309,16 +226,12 @@ export class Game {
 
             if (!this.isAdjacent(this.currentItem, item)) {
                 this.deselectItem();
-                console.log("next item", item)
-                // this.selectItem(item);
                 return;
             }
 
             this.swapItems(this.currentItem, item);
             this.currentItem = null;
 
-
-            console.log("FINAL CURR ITEM", this.currentItem)
             return;
         }
 
@@ -327,10 +240,6 @@ export class Game {
     onPointerMoveHandler(e) {
 
         if (this.currentItem) {
-
-            // console.log("how to find neighbor", this.currentItem)
-
-
             // Calculate the distance between the current position and the start position
             const pos = this.currentItem.container.toLocal(e.data.global.clone());
             const dx = pos.x - this.startPos.x;
