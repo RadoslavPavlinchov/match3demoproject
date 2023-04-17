@@ -14,9 +14,7 @@ export class Game {
         this.grid.container.on("itemClick", this.onItemClick, this);
 
         this.grid.fields.forEach(field => {
-            field.item.container.on("pointerdown", this.onPointerDownHandler, this)
-            field.item.container.on("pointerup", this.onPointerUpHandler, this);
-            field.item.container.on("pointermove", this.onPointerMoveHandler, this);
+            this.attachEventsTo(field.item);
         })
 
         this.combinationsManager = new CombinationsManager(this.grid);
@@ -353,9 +351,7 @@ export class Game {
 
                 item.container.y = -200;
 
-                item.container.on("pointerdown", this.onPointerDownHandler, this)
-                item.container.on("pointerup", this.onPointerUpHandler, this);
-                item.container.on("pointermove", this.onPointerMoveHandler, this);
+                this.attachEventsTo(item)
 
                 item.fallDownTo(field.position).then(() => {
 
@@ -367,5 +363,11 @@ export class Game {
                 })
             })
         })
+    }
+
+    attachEventsTo(item) {
+        item.container.on("pointerdown", this.onPointerDownHandler, this)
+        item.container.on("pointerup", this.onPointerUpHandler, this);
+        item.container.on("pointermove", this.onPointerMoveHandler, this);
     }
 }
