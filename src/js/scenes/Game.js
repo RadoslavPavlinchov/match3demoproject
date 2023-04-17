@@ -213,7 +213,6 @@ export class Game {
             return;
         }
 
-
         // Calculate the distance between the current position and the start position
         const pos = this.currentItem.container.toLocal(e.data.global.clone());
         const dx = pos.x - this.startPos.x;
@@ -263,10 +262,10 @@ export class Game {
 
         this.processFallDownOfItems()
             .then(() => {
-                this.createNewItems()
+                return this.createNewItems();
             })
             .then(() => {
-                this.onFallDownComplete();
+                return this.onFallDownComplete();
             })
     }
 
@@ -360,7 +359,6 @@ export class Game {
                     completed += 1;
 
                     if (completed >= total) {
-                        console.log("completed, total", completed, total)
                         resolve();
                     }
                 })
