@@ -4,51 +4,29 @@ import { CombinationsManager } from "../components/CombinationsManager";
 
 export class Game {
     // currentItem = {};
+    isDisabled = false
     isSwapping = false;
 
     constructor() {
-        this.directionsMap = {
-            "up": (adjacentItem) => {
-                console.log("up")
-
-
-                this.swapItems(this.currentItem, adjacentItem.item);
-                this.isSwapping = true;
-            },
-            "right": (adjacentItem) => {
-                console.log("right")
-                this.swapItems(this.currentItem, adjacentItem.item);
-                this.isSwapping = true;
-            },
-            "down": (adjacentItem) => {
-                console.log("down")
-                this.swapItems(this.currentItem, adjacentItem.item);
-                this.isSwapping = true;
-            },
-            "left": (adjacentItem) => {
-                console.log("left")
-                this.swapItems(this.currentItem, adjacentItem.item);
-                this.isSwapping = true;
-            }
-        }
-
-
-
         this.container = new PIXI.Container();
 
         this.grid = this.createGrid();
         this.grid.container.on("itemClick", this.onItemClick, this);
-        // this.grid.container.on("itemPointerUp", this.itemPointerUp, this);
-
 
         this.grid.fields.forEach(field => {
             field.item.container.on("pointerdown", this.onPointerDownHandler, this)
-            field.item.container.on("pointerup", this.onPointerUpHandler, this)
-            field.item.container.on("pointermove", this.onPointerMoveHandler, this)
+            field.item.container.on("pointerup", this.onPointerUpHandler, this);
+            field.item.container.on("pointermove", this.onPointerMoveHandler, this);
         })
 
         this.combinationsManager = new CombinationsManager(this.grid);
 
+        this.directionsMap = {
+            "right": () => this.grid.rows[this.startRow][this.startCol + 1].item,
+            "left": () => this.grid.rows[this.startRow][this.startCol - 1].item,
+            "down": () => this.grid.rows[this.startRow + 1][this.startCol].item,
+            "up": () => this.grid.rows[this.startRow - 1][this.startCol].item
+        }
     }
 
     createBackground() {
@@ -98,30 +76,33 @@ export class Game {
     //     this.selectItem(item);
     // }
 
-    isAdjacent(item1, item2) {
-        const xOffset = 50;
-        const yOffset = 50;
+    // ---------- USED IN SELECT AND SWAP MOVEMENT ----------
+    // isAdjacent(item1, item2) {
+    //     const xOffset = 50;
+    //     const yOffset = 50;
 
-        // Replace the 100 with the width of a Field
-        const item1X = (item1.container.x - xOffset) / 100;
-        const item1Y = (item1.container.y - yOffset) / 100;
+    //     // Replace the 100 with the width of a Field
+    //     const item1X = (item1.container.x - xOffset) / 100;
+    //     const item1Y = (item1.container.y - yOffset) / 100;
 
-        const item2X = (item2.container.x - xOffset) / 100;
-        const item2Y = (item2.container.y - yOffset) / 100;
+    //     const item2X = (item2.container.x - xOffset) / 100;
+    //     const item2Y = (item2.container.y - yOffset) / 100;
 
 
-        if (Math.abs(item1X - item2X) <= 1 && Math.abs(item1Y - item2Y) === 0) {
-            return true;
-        }
+    //     if (Math.abs(item1X - item2X) <= 1 && Math.abs(item1Y - item2Y) === 0) {
+    //         return true;
+    //     }
 
-        if (Math.abs(item1Y - item2Y) <= 1 && Math.abs(item1X - item2X) === 0) {
-            return true;
-        }
+    //     if (Math.abs(item1Y - item2Y) <= 1 && Math.abs(item1X - item2X) === 0) {
+    //         return true;
+    //     }
 
-        return false;
-    }
+    //     return false;
+    // }
 
     swapItems(currItem, nextItem) {
+        this.isDisabled = true;
+
         const x1 = currItem.container.x;
         const y1 = currItem.container.y;
 
@@ -134,6 +115,7 @@ export class Game {
         currItem.moveTo(x2, y2, 0.1, "none").then(() => {
             isComplete1 = true
             if (isComplete2) {
+                this.currentItem = null;
                 this.onSwapCompleteHandler(currItem, nextItem)
             }
 
@@ -142,6 +124,7 @@ export class Game {
         nextItem.moveTo(x1, y1, 0.1, "none").then(() => {
             isComplete2 = true
             if (isComplete1) {
+                this.currentItem = null;
                 this.onSwapCompleteHandler(currItem, nextItem)
             }
         });
@@ -150,18 +133,6 @@ export class Game {
         currItem.field.deselect();
 
         nextItem.deselect();
-
-        // const currField = currItem.field;
-        // const nextField = nextItem.field;
-
-        // currField.item = nextItem;
-        // nextItem.field = currField;
-
-        // nextField.item = currItem;
-        // currItem.field = nextField;
-
-        // currItem = null;
-        // nextItem = null;
     }
 
     selectItem(item) {
@@ -189,120 +160,96 @@ export class Game {
         // Check if two Items are neighbors
         if (this.currentItem) {
             this.deselectItem();
+            this.startPos = null;
         }
-
-
-        this.currentItem = null;
-        this.startPos = null;
     }
 
-    swipeHandler(direction, adjacentItem) {
-
+    swipeHandler(direction) {
         if (this.isSwapping) {
-            console.log("you shall not pass")
             return;
         }
 
-        console.log("you pass")
+        this.isSwapping = true;
+        const adjacentItem = this.getAdjacentItem(direction);
+        this.swapItems(this.currentItem, adjacentItem);
+    }
 
-        this.directionsMap[direction](adjacentItem);
+    getAdjacentItem(direction) {
+        return this.directionsMap[direction]();
     }
 
     // ---------- USED IN SWIPE MOVEMENT ----------
     onItemClick(item) {
+        if (this.isDisabled) {
+            return;
+        }
 
         this.selectItem(item);
     }
 
-    itemPointerUp(item) {
+    // ---------- USED IN SELECT AND SWAP MOVEMENT ----------
+    // itemPointerUp(item) {
+    //     if (this.currentItem === item) {
+    //         return;
+    //     }
 
-        if (this.currentItem === item) {
-            return;
-        }
+    //     // Check if two Items are neighbors
+    //     if (this.currentItem) {
+    //         if (!this.isAdjacent(this.currentItem, item)) {
+    //             this.deselectItem();
+    //             return;
+    //         }
 
+    //         this.swapItems(this.currentItem, item);
 
-        // Check if two Items are neighbors
-        if (this.currentItem) {
-
-            if (!this.isAdjacent(this.currentItem, item)) {
-                this.deselectItem();
-                return;
-            }
-
-            this.swapItems(this.currentItem, item);
-            this.currentItem = null;
-
-            return;
-        }
-
-    }
+    //         this.currentItem = null;
+    //         return;
+    //     }
+    // }
 
     onPointerMoveHandler(e) {
 
-        if (this.currentItem) {
-            // Calculate the distance between the current position and the start position
-            const pos = this.currentItem.container.toLocal(e.data.global.clone());
-            const dx = pos.x - this.startPos.x;
-            const dy = pos.y - this.startPos.y;
+        if (!this.currentItem) {
+            return;
+        }
 
-            // Adjust for the radius of the circles
-            const r = 45;
-            const w = 100;
-            const h = 100;
 
-            // Check if the user has swiped in a certain direction
-            if (Math.abs(dx) > Math.abs(dy)) {
-                if (dx > r) {
-                    const adjacentItem = this.grid.rows[this.startRow][this.startCol + 1];
+        // Calculate the distance between the current position and the start position
+        const pos = this.currentItem.container.toLocal(e.data.global.clone());
+        const dx = pos.x - this.startPos.x;
+        const dy = pos.y - this.startPos.y;
 
-                    if (!adjacentItem) {
-                        return;
-                    }
+        // Adjust for the radius of the circles
+        const r = 45;
 
-                    this.swipeHandler("right", adjacentItem)
-                    return;
-                } else if (dx < -r) {
-                    const adjacentItem = this.grid.rows[this.startRow][this.startCol - 1];
-
-                    if (!adjacentItem) {
-                        return;
-                    }
-
-                    this.swipeHandler("left", adjacentItem)
-                    return;
-                }
-            } else {
-                if (dy > r) {
-                    const adjacentItem = this.grid.rows[this.startRow + 1][this.startCol];
-
-                    if (!adjacentItem) {
-                        return;
-                    }
-
-                    this.swipeHandler("down", adjacentItem)
-                    return;
-                } else if (dy < -r) {
-                    const adjacentItem = this.grid.rows[this.startRow - 1][this.startCol];
-
-                    if (!adjacentItem) {
-                        return;
-                    }
-
-                    this.swipeHandler("up", adjacentItem)
-                    return;
-                }
+        // Check if the user has swiped in a certain direction
+        if (Math.abs(dx) > Math.abs(dy)) {
+            if (dx > r) {
+                this.swipeHandler("right");
+            } else if (dx < -r) {
+                this.swipeHandler("left");
+            }
+        } else {
+            if (dy > r) {
+                this.swipeHandler("down");
+            } else if (dy < -r) {
+                this.swipeHandler("up");
             }
         }
+
     }
 
     onSwapCompleteHandler(current, next) {
-        this.grid.swap(current, next)
+        this.grid.swap(current, next);
 
         const combinations = this.combinationsManager.findCombinations();
-        this.processCombinations(combinations);
 
-        this.isSwapping = false;
-        this.currentItem = null;
+        if (combinations.length > 0) {
+            this.processCombinations(combinations);
+        } else {
+            this.isSwapping = false;
+            this.isDisabled = false;
+        }
     }
 
     destroyCombinations(combinations) {
@@ -329,9 +276,9 @@ export class Game {
         if (combinations.length > 0) {
             this.processCombinations(combinations)
         } else {
-
             // IDLE STATE / WAIT FOR USER INPUT
-
+            this.isSwapping = false;
+            this.isDisabled = false;
         }
     }
 
