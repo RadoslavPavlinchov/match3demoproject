@@ -157,7 +157,6 @@ export class Game {
 
 
     onPointerUpHandler(e) {
-        // Check if two Items are neighbors
         if (this.currentItem) {
             this.deselectItem();
             this.startPos = null;
@@ -353,6 +352,10 @@ export class Game {
                 const item = this.grid.createItem(field);
 
                 item.container.y = -200;
+
+                item.container.on("pointerdown", this.onPointerDownHandler, this)
+                item.container.on("pointerup", this.onPointerUpHandler, this);
+                item.container.on("pointermove", this.onPointerMoveHandler, this);
 
                 item.fallDownTo(field.position).then(() => {
 
