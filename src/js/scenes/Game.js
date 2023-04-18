@@ -25,6 +25,10 @@ export class Game {
             "down": () => this.grid.rows[this.startRow + 1][this.startCol].item,
             "up": () => this.grid.rows[this.startRow - 1][this.startCol].item
         }
+
+
+        this.destroyInitialCombinations();
+
     }
 
     createBackground() {
@@ -369,5 +373,23 @@ export class Game {
         item.container.on("pointerdown", this.onPointerDownHandler, this)
         item.container.on("pointerup", this.onPointerUpHandler, this);
         item.container.on("pointermove", this.onPointerMoveHandler, this);
+    }
+
+    destroyInitialCombinations() {
+        const combinations = this.combinationsManager.findCombinations();
+
+        if (combinations.length === 0) {
+            return;
+        }
+
+        this.destroyCombinations(combinations);
+
+        const emptyFields = this.grid.fields.filter(field => !field.item);
+        emptyFields.forEach(field => {
+            const item = this.grid.createItem(field);
+            this.attachEventsTo(item)
+        })
+
+        this.destroyInitialCombinations();
     }
 }
