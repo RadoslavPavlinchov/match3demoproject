@@ -102,7 +102,7 @@ export class Game {
     //     return false;
     // }
 
-    swapItems(currItem, nextItem) {
+    swapItems(currItem, nextItem, isReversed) {
         this.isDisabled = true;
 
         const x1 = currItem.container.x;
@@ -118,7 +118,7 @@ export class Game {
             isComplete1 = true
             if (isComplete2) {
                 this.currentItem = null;
-                this.onSwapCompleteHandler(currItem, nextItem)
+                this.onSwapCompleteHandler(currItem, nextItem, isReversed)
             }
 
         });
@@ -127,7 +127,7 @@ export class Game {
             isComplete2 = true
             if (isComplete1) {
                 this.currentItem = null;
-                this.onSwapCompleteHandler(currItem, nextItem)
+                this.onSwapCompleteHandler(currItem, nextItem, isReversed)
             }
         });
 
@@ -239,14 +239,22 @@ export class Game {
 
     }
 
-    onSwapCompleteHandler(current, next) {
+    onSwapCompleteHandler(current, next, isReversed) {
         this.grid.swap(current, next);
+
+        if (isReversed) {
+            this.isSwapping = false;
+            this.isDisabled = false;
+            return;
+        }
 
         const combinations = this.combinationsManager.findCombinations();
 
         if (combinations.length > 0) {
             this.processCombinations(combinations);
         } else {
+            this.swapItems(next, current, true)
+
             this.isSwapping = false;
             this.isDisabled = false;
         }
