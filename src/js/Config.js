@@ -1,5 +1,3 @@
-import { Game } from "./scenes/Game";
-
 export const Config = {
     itemsColors: [
         "0xff0000",
@@ -16,7 +14,5 @@ export const Config = {
     field: {
         width: 100,
         height: 100
-    },
-
-    startScene: Game,
+    }
 }
