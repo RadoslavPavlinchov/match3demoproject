@@ -24,7 +24,7 @@ export default class SceneManager {
         this.current = new this[name](options);
 
         // Add the scene/container
-        this.stage.addChild(this.current.container);
+        this.stage.addChild(this.current);
 
 
         console.log("check stage", this)

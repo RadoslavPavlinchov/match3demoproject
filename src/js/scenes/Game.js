@@ -1,14 +1,17 @@
 import * as PIXI from "pixi.js";
 import { Grid } from "../components/Grid";
 import { CombinationsManager } from "../components/CombinationsManager";
+import BaseScene from "../lib/BaseScene";
 
-export class Game {
+export class Game extends BaseScene {
     // currentItem = {};
     isDisabled = false
     isSwapping = false;
 
     constructor() {
-        this.container = new PIXI.Container();
+        super();
+
+        // this.container = new PIXI.Container();
 
         this.grid = this.createGrid();
         this.grid.container.on("itemClick", this.onItemClick, this);
@@ -38,12 +41,12 @@ export class Game {
         graphics.drawRect(0, 0, 650, 650);
         graphics.endFill();
 
-        this.container.addChild(graphics);
+        this.addChild(graphics);
     }
 
     createGrid() {
         const grid = new Grid();
-        this.container.addChild(grid.container);
+        this.addChild(grid.container);
         return grid;
     }
 
