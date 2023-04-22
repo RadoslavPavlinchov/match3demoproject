@@ -12,7 +12,8 @@ class Application {
         this.config = config;
         this.app = new PIXI.Application({ resizeTo: window });
 
-        this.scene = new SceneManager(this.app.stage);
+        this.scenes = new SceneManager(this.app.stage);
+        this.scenes.add("Game", Game);
 
         document.body.appendChild(this.app.view);
 
@@ -23,10 +24,7 @@ class Application {
         // this.scene = new this.config["startScene"]();
         // this.app.stage.addChild(this.scene.container);
 
-        this.scene.add("Game", Game);
-        this.scene.start("Game");
-
-        console.log(this.app)
+        this.scenes.start("Game");
     }
 }
 
