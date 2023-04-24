@@ -3,6 +3,7 @@ import { gsap } from "gsap";
 import { PixiPlugin } from "gsap/PixiPlugin";
 import SceneManager from "./lib/SceneManager";
 import { Game } from "./scenes/Game";
+import Start from "./scenes/Start";
 
 gsap.registerPlugin(PixiPlugin);
 PixiPlugin.registerPIXI(PIXI);
@@ -13,6 +14,7 @@ class Application {
         this.app = new PIXI.Application({ resizeTo: window });
 
         this.scenes = new SceneManager(this.app.stage);
+        this.scenes.add("Start", Start);
         this.scenes.add("Game", Game);
 
         document.body.appendChild(this.app.view);
@@ -21,10 +23,8 @@ class Application {
     }
 
     start() {
-        // this.scene = new this.config["startScene"]();
-        // this.app.stage.addChild(this.scene.container);
-
-        this.scenes.start("Game");
+        this.scenes.start("Start");
+        // this.scenes.start("Game");
     }
 }
 
