@@ -18,7 +18,8 @@
   "homepage": "https://github.com/RadoslavPavlinchov/match3demoproject#readme",
   "dependencies": {
     "gsap": "^3.11.5",
-    "pixi.js": "^7.1.4"
+    "pixi.js": "^7.1.4",
+    "socket.io": "^4.6.1"
   },
   "devDependencies": {
     "css-loader": "^6.7.3",
