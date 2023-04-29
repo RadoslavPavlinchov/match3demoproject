@@ -23,7 +23,8 @@ class Application {
         this.scenes.add("Start", Start);
         this.scenes.add("Game", Game);
 
-        document.body.appendChild(this.app.view);
+        const appElement = document.getElementById("app");
+        appElement.appendChild(this.app.view);
 
         window.addEventListener('resize', () => {
             const screenWidth = window.innerWidth;
