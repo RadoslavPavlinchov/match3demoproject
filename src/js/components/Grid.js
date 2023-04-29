@@ -18,7 +18,7 @@ export class Grid {
 
         this.create();
 
-        this.alignPosition();
+        // this.alignPosition();
     }
 
     create() {
