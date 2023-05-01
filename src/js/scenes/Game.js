@@ -15,7 +15,7 @@ export class Game extends BaseScene {
         this.options = options;
 
         this.grid = this.createGrid();
-        this.grid.container.on("itemClick", this.onItemClick, this);
+        this.grid.on("itemClick", this.onItemClick, this);
 
         this.grid.fields.forEach(field => {
             this.attachEventsTo(field.item);
@@ -47,7 +47,7 @@ export class Game extends BaseScene {
 
     createGrid() {
         const grid = new Grid();
-        this.addChild(grid.container);
+        this.addChild(grid);
         return grid;
     }
 

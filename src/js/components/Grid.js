@@ -4,7 +4,7 @@ import { Field } from "./Field";
 import { Item } from "./Item";
 import { Utils } from "../Utils";
 
-export class Grid {
+export class Grid extends PIXI.Container {
     rows = [];
     columns = [];
 
@@ -14,7 +14,7 @@ export class Grid {
     colsCount = App.config.board.cols;
 
     constructor() {
-        this.container = new PIXI.Container();
+        super();
 
         this.create();
 
@@ -51,7 +51,7 @@ export class Grid {
     createField(row, col) {
         const field = new Field(row, col);
         this.fields.push(field);
-        this.container.addChild(field.container);
+        this.addChild(field.container);
 
         return field;
     }
@@ -71,12 +71,12 @@ export class Grid {
 
         // Move those two event handlers to the Item class
         item.container.on("pointerdown", () => {
-            this.container.emit("itemClick", item)
+            this.emit("itemClick", item)
         })
 
         field.setItem(item);
 
-        this.container.addChild(item.container);
+        this.addChild(item.container);
 
         return item;
     }
@@ -87,8 +87,8 @@ export class Grid {
         const gridWidth = width * this.colsCount;
         const gridHeight = height * this.rowsCount;
 
-        this.container.x = (window.innerWidth - gridWidth) / 2
-        this.container.y = (window.innerHeight - gridHeight) / 2
+        this.x = (window.innerWidth - gridWidth) / 2
+        this.y = (window.innerHeight - gridHeight) / 2
     }
 
     swap(currItem, nextItem) {
