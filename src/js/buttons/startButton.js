@@ -20,7 +20,7 @@ export default class StartButton extends PIXI.Container {
     }
 
     onClick() {
-        App.scenes.start("Game")
+        App.scenes.start("Game", this.options)
     }
 
     createButton() {

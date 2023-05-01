@@ -8,10 +8,11 @@ export class Game extends BaseScene {
     isDisabled = false
     isSwapping = false;
 
-    constructor() {
+    constructor(options) {
         super();
 
         // this.container = new PIXI.Container();
+        this.options = options;
 
         this.grid = this.createGrid();
         this.grid.container.on("itemClick", this.onItemClick, this);
