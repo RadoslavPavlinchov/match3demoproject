@@ -2,9 +2,10 @@ import * as PIXI from "pixi.js";
 import { App } from "../App";
 
 export default class StartButton extends PIXI.Container {
-    constructor() {
+    constructor(options) {
         super();
 
+        this.options = options;
         this.interactive = true;
         this.cursor = "pointer";
 
@@ -15,7 +16,7 @@ export default class StartButton extends PIXI.Container {
         this.createButton();
         this.createText();
 
-        this.on("pointerdown", this.onClick, this);
+        this.on("pointerdown", this.onClick, this.parent);
     }
 
     onClick() {
@@ -23,12 +24,14 @@ export default class StartButton extends PIXI.Container {
     }
 
     createButton() {
+        const { appWidth, appHeight } = this.options;
+
         const graphics = new PIXI.Graphics();
 
         const width = 200;
         const height = 100;
-        const x = window.innerWidth / 2 - width / 2;
-        const y = window.innerHeight / 2 - height / 2;
+        const x = appWidth / 2 - width / 2;
+        const y = appHeight / 2 - height / 2;
         const radius = 20;
 
         graphics.lineStyle(2, 0xFFFFFF, 1);
@@ -40,11 +43,12 @@ export default class StartButton extends PIXI.Container {
     }
 
     createText() {
+        const { appWidth, appHeight } = this.options;
         const text = new PIXI.Text('START');
 
         text.anchor.set(0.5)
-        text.x = window.innerWidth / 2;
-        text.y = window.innerHeight / 2;
+        text.x = appWidth / 2;
+        text.y = appHeight / 2;
 
         this.addChild(text)
     }

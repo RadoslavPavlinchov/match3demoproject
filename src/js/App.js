@@ -38,12 +38,17 @@ class Application {
         });
 
         this.start();
-        this.centerStage();
+        // this.centerStage();
     }
 
     start() {
-        // this.scenes.start("Start");
-        this.scenes.start("Game");
+        const options = {
+            appWidth: this.app.screen.width,
+            appHeight: this.app.screen.height
+        }
+
+        this.scenes.start("Start", options);
+        // this.scenes.start("Game");
     }
 
     centerStage() {

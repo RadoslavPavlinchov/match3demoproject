@@ -4,7 +4,7 @@ export default class BaseScene extends PIXI.Container {
     constructor() {
         super();
 
-        this.init();
+        // this.init();
     }
 
     init() {
