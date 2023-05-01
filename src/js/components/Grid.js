@@ -13,12 +13,14 @@ export class Grid extends PIXI.Container {
     rowsCount = App.config.board.rows;
     colsCount = App.config.board.cols;
 
-    constructor() {
+    constructor(options) {
         super();
+
+        this.options = options;
 
         this.create();
 
-        // this.alignPosition();
+        this.alignPosition();
     }
 
     create() {
@@ -84,11 +86,13 @@ export class Grid extends PIXI.Container {
     alignPosition() {
         const { width, height } = App.config.field;
 
+        const { appWidth, appHeight } = this.options;
+
         const gridWidth = width * this.colsCount;
         const gridHeight = height * this.rowsCount;
 
-        this.x = (window.innerWidth - gridWidth) / 2
-        this.y = (window.innerHeight - gridHeight) / 2
+        this.x = (appWidth - gridWidth) / 2
+        this.y = (appHeight - gridHeight) / 2
     }
 
     swap(currItem, nextItem) {

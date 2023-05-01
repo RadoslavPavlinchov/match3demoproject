@@ -46,7 +46,7 @@ export class Game extends BaseScene {
     }
 
     createGrid() {
-        const grid = new Grid();
+        const grid = new Grid(this.options);
         this.addChild(grid);
         return grid;
     }
