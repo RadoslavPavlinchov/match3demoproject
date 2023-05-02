@@ -19,21 +19,56 @@ export class CombinationsManager {
                 // check the next 3 fields 
                 const firstField = this.grid.rows[row][col];
                 const secondField = this.grid.rows[row][col + 1];
+
+                if (firstField.item.color !== secondField.item.color) {
+                    continue;
+                }
+
                 const thirdField = this.grid.rows[row][col + 2];
 
+                if (secondField.item.color !== thirdField.item.color) {
+                    continue;
+                }
 
-                if ((firstField.item.color === secondField.item.color) && (secondField.item.color === thirdField.item.color)) {
+                if (firstField.isMarked || secondField.isMarked || thirdField.isMarked) {
+                    continue;
+                }
 
-                    if (firstField.isMarked || secondField.isMarked || thirdField.isMarked) {
-                        continue;
-                    }
+                const fourthField = this.grid.rows[row][col + 3];
 
+                if (!fourthField || (thirdField.item.color !== fourthField.item.color)) {
                     firstField.isMarked = true;
                     secondField.isMarked = true;
                     thirdField.isMarked = true;
 
                     combinations.push(firstField, secondField, thirdField)
+                    continue;
                 }
+
+                const fifthField = this.grid.rows[row][col + 4];
+
+                if (!fifthField || (fourthField.item.color !== fifthField.item.color)) {
+                    firstField.isMarked = true;
+                    secondField.isMarked = true;
+                    thirdField.isMarked = true;
+                    fourthField.isMarked = true;
+
+                    combinations.push(firstField, secondField, thirdField, fourthField)
+                    continue;
+                }
+
+
+                // if (firstField.isMarked || secondField.isMarked || thirdField.isMarked) {
+                //     continue;
+                // }
+
+                firstField.isMarked = true;
+                secondField.isMarked = true;
+                thirdField.isMarked = true;
+                fourthField.isMarked = true;
+                fifthField.isMarked = true;
+
+                combinations.push(firstField, secondField, thirdField, fourthField, fifthField);
 
             }
 
@@ -48,21 +83,55 @@ export class CombinationsManager {
                 // check the next 3 fields 
                 const firstField = this.grid.rows[row][col]
                 const secondField = this.grid.rows[row + 1][col];
+
+
+
+
+                if (firstField.item.color !== secondField.item.color) {
+                    continue;
+                }
+
                 const thirdField = this.grid.rows[row + 2][col];
 
+                if (secondField.item.color !== thirdField.item.color) {
+                    continue;
+                }
 
-                if ((firstField.item.color === secondField.item.color) && (secondField.item.color === thirdField.item.color)) {
 
-                    if (firstField.isMarked || secondField.isMarked || thirdField.isMarked) {
-                        continue;
-                    }
+                if (firstField.isMarked || secondField.isMarked || thirdField.isMarked) {
+                    continue;
+                }
 
+                const fourthField = this.grid.rows[row + 3][col];
+                if (!fourthField || (thirdField.item.color !== fourthField.item.color)) {
                     firstField.isMarked = true;
                     secondField.isMarked = true;
                     thirdField.isMarked = true;
 
                     combinations.push(firstField, secondField, thirdField)
+                    continue;
                 }
+
+
+                const fifthField = this.grid.rows[row + 4][col];
+                if (!fifthField || (fourthField.item.color !== fifthField.item.color)) {
+                    firstField.isMarked = true;
+                    secondField.isMarked = true;
+                    thirdField.isMarked = true;
+                    fourthField.isMarked = true;
+
+                    combinations.push(firstField, secondField, thirdField, fourthField)
+                    continue;
+                }
+
+
+                firstField.isMarked = true;
+                secondField.isMarked = true;
+                thirdField.isMarked = true;
+                fourthField.isMarked = true;
+                fifthField.isMarked = true;
+
+                combinations.push(firstField, secondField, thirdField, fourthField, fifthField);
             }
         }
 
